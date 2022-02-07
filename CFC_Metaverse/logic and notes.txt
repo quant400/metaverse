@@ -1,0 +1,9 @@
+For Ghassen : 
+Use pooling instead ! not instance . 
+the script should be one manager that controle some platforms and do the pooling depend to character position 
+
+for souheil : 
+make system to make 5000 scene and set the grid position and set asset postions at start 
+make a system to set visible scenes when load this scene 
+system is based on scene in the middle and 8 around that scene and this goes on and on till the last corner , 
+should be related to the grid . 
