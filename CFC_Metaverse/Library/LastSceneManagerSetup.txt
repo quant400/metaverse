@@ -1,29 +1,5 @@
 sceneSetups:
-- path: Assets/AdditiveSceneManager/Demo/Scenes/PlayerCamera.unity
+- path: Assets/Project/Scenes/SceneLoadDemo/scene 0.unity
   isLoaded: 1
   isActive: 1
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/Sun.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/RoomA.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/RoomB.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/RoomC.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/RoomD.unity
-  isLoaded: 1
-  isActive: 0
-  isSubScene: 0
-- path: Assets/AdditiveSceneManager/Demo/Scenes/RoomE.unity
-  isLoaded: 1
-  isActive: 0
   isSubScene: 0

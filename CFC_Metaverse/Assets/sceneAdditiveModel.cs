@@ -17,6 +17,8 @@ public struct sceneAdditiveModel
         loading,
         loaded,
     }
+    [Serializable]
+
     public class sceneAdditiveClass
     {
         public string sceneName;
