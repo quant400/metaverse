@@ -53,20 +53,21 @@
     <UnityVersion>2020.3.26f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\sceneAdditiveModel.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Scripts\SceneController.cs" />
     <Compile Include="Assets\Project\MVP\helpers\sceneLoader.cs" />
     <Compile Include="Assets\Project\Scripts\SC_TPSController.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Project\Scripts\SC_CameraCollision.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Scripts\SceneControllerSettingsObject.cs" />
+    <Compile Include="Assets\Project\Scripts\PlatformManager.cs" />
     <Compile Include="Assets\Project\Scripts\Platform.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Scripts\AdditiveSceneTrigger.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Scripts\ProjectSceneList.cs" />
+    <Compile Include="Assets\sceneLoadManager.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Demo\Scripts\DemoMouseLook.cs" />
     <Compile Include="Assets\sceneLoadClass.cs" />
-    <Compile Include="Assets\sceneLoadManager.cs" />
-    <Compile Include="Assets\sceneAdditiveModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

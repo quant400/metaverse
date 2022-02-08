@@ -1,20 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UniRx;
+using UniRx.Triggers;
+using UniRx.Operators;
 public class PlatformManager : MonoBehaviour
 {
     public Transform player;
-
+    public ReactiveProperty<Vector3> reactivePlayerPosition = new ReactiveProperty<Vector3>();
     public Platform mainPlatform;
     public Platform[] platforms;
-
+    public ReactiveProperty<Platform> mainReactivePlatform = new ReactiveProperty<Platform>();
+    public Material[] stateMaterials;
+    private void Start()
+    {
+        obserePlayerMoving();
+    }
     private void Update()
     {
-        FindMainPlatform();
-        PositionOtherPlatforms();
+        reactivePlayerPosition.Value = player.position;
+        //FindMainPlatform();
+        //PositionOtherPlatforms();
     }
+    void obserePlayerMoving()
+    {
+        reactivePlayerPosition
+            .Do(_ => FindMainPlatform())
+            .Do(_ => mainReactivePlatform.Value = mainPlatform)
+            .Subscribe()
+            .AddTo(this);
+        mainReactivePlatform
+            .Do(_ => PositionOtherPlatforms())
+            .Do(_ => _.gameObject.GetComponent<Renderer>().material = stateMaterials[0])
+            .Subscribe()
+            .AddTo(this);
 
+    }
     void FindMainPlatform()
     {
         float distance = 9999f;
@@ -28,7 +49,7 @@ public class PlatformManager : MonoBehaviour
         }
         mainPlatform.setIndex();
     }
-
+    
     void PositionOtherPlatforms()
     {
         int count = 1;
@@ -36,13 +57,17 @@ public class PlatformManager : MonoBehaviour
         {
             if (platform != mainPlatform)
             {
+                setOtherPlatformMaterials(platform.gameObject.GetComponent<Renderer>());
                 platform.internalIndex = count;
                 SnapPltform(platform);
                 count++;
             }
         }
     }
-
+    void setOtherPlatformMaterials(Renderer mesh)
+    {
+        mesh.material = stateMaterials[1];
+    }
     void SnapPltform(Platform platform)
     {
         switch(platform.internalIndex)
