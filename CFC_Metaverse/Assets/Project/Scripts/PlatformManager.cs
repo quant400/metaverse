@@ -26,12 +26,13 @@ public class PlatformManager : MonoBehaviour
     {
         reactivePlayerPosition
             .Do(_ => FindMainPlatform())
-            .Do(_ => mainReactivePlatform.Value = mainPlatform)
             .Subscribe()
             .AddTo(this);
         mainReactivePlatform
+            .Where(_=>_!=null)
             .Do(_ => PositionOtherPlatforms())
             .Do(_ => _.gameObject.GetComponent<Renderer>().material = stateMaterials[0])
+            .Do(_=>SceneLoaderView.control.loadSceneFromVector(_.index,_.gameObject.transform.GetChild(0).position))
             .Subscribe()
             .AddTo(this);
 
@@ -39,15 +40,21 @@ public class PlatformManager : MonoBehaviour
     void FindMainPlatform()
     {
         float distance = 9999f;
-        foreach (Platform platform in platforms)
-        {
-            if ((platform.transform.GetChild(0).position - player.position).magnitude < distance)
+         foreach (Platform platform in platforms)
             {
-                distance = (platform.transform.GetChild(0).position - player.position).magnitude;
-                mainPlatform = platform;
+                if ((platform.transform.GetChild(0).position - player.position).magnitude < distance)
+                {
+                    distance = (platform.transform.GetChild(0).position - player.position).magnitude;
+                    mainPlatform = platform;
+                }
             }
-        }
-        mainPlatform.setIndex();
+            
+                mainPlatform.setIndex();
+                mainReactivePlatform.Value = mainPlatform;
+            
+           
+        
+        
     }
     
     void PositionOtherPlatforms()

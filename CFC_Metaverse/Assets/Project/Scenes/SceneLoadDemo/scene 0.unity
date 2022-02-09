@@ -689,8 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridValue: {x: 0, y: 0}
   sceneMatrixRank: 0
-  mainParent: {fileID: 0}
-  objectParent: {fileID: 0}
+  mainParent: {fileID: 706273894}
+  objectParent: {fileID: 1869253421}
   gridFactor: 0
   sceneData:
     sceneName: 

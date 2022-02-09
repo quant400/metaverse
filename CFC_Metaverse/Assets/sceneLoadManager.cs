@@ -19,7 +19,7 @@ public class sceneLoadManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        setPlayerGridDataFromPosition();
+        //setPlayerGridDataFromPosition();
     }
     public void setPlayerGridDataFromPosition()
     {

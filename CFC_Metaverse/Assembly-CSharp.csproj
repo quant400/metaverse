@@ -68,6 +68,11 @@
     <Compile Include="Assets\sceneLoadManager.cs" />
     <Compile Include="Assets\AdditiveSceneManager\Demo\Scripts\DemoMouseLook.cs" />
     <Compile Include="Assets\sceneLoadClass.cs" />
+    <Compile Include="Assets\SceneLoaderView.cs" />
+    <Compile Include="Assets\Project\Shaders\mapgrid1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Project\Shaders\gridshader2.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
