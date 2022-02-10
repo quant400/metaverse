@@ -6,12 +6,26 @@ using UniRx.Triggers;
 using UniRx.Operators;
 public class PlatformManager : MonoBehaviour
 {
+    public static PlatformManager control;
     public Transform player;
     public ReactiveProperty<Vector3> reactivePlayerPosition = new ReactiveProperty<Vector3>();
     public Platform mainPlatform;
+    public List<Platform> sidePlatforms=new List<Platform>();
+
     public Platform[] platforms;
     public ReactiveProperty<Platform> mainReactivePlatform = new ReactiveProperty<Platform>();
     public Material[] stateMaterials;
+    void Awake()
+    {
+        if (control == null)
+        {
+            control = this;
+        }
+        else if (control != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         obserePlayerMoving();
@@ -29,13 +43,22 @@ public class PlatformManager : MonoBehaviour
             .Subscribe()
             .AddTo(this);
         mainReactivePlatform
-            .Where(_=>_!=null)
+            .Where(_ => _ != null)
             .Do(_ => PositionOtherPlatforms())
             .Do(_ => _.gameObject.GetComponent<Renderer>().material = stateMaterials[0])
-            .Do(_=>SceneLoaderView.control.loadSceneFromVector(_.index,_.gameObject.transform.GetChild(0).position))
+            .Do(_ => SceneLoaderView.control.loadSceneFromVector(_.index, _.gameObject.transform.GetChild(0).position))
+            .DelayFrame(2)
+            .Do(_=> loadSidePlatforms())
             .Subscribe()
             .AddTo(this);
 
+    }
+    void loadSidePlatforms()
+    {
+        for(int i = 0; i < sidePlatforms.Count; i++)
+        {
+            SceneLoaderView.control.LoadSideScene(sidePlatforms[i].index, sidePlatforms[i].gameObject.transform.GetChild(0).position, SceneLoaderView.control.toLoadSceneSideScenes.Value);
+        }
     }
     void FindMainPlatform()
     {
@@ -51,7 +74,14 @@ public class PlatformManager : MonoBehaviour
             
                 mainPlatform.setIndex();
                 mainReactivePlatform.Value = mainPlatform;
-            
+        sidePlatforms.Clear();
+            for (int i = 0; i < platforms.Length; i++)
+        {
+            if (platforms[i] != mainPlatform)
+            {
+                sidePlatforms.Add(platforms[i]);
+            }
+        }
            
         
         
