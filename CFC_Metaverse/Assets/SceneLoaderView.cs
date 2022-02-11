@@ -326,6 +326,10 @@ public class sceneLoadedData
                 GameObject mainSceneObject = FindSceneObject(indexGrid, sceneNameMain).gameObject;
                 mainSceneObject.GetComponent<sceneLoadClass>().objectParent.position = sceneData.instancePosition;
                 mainSceneObject.GetComponent<sceneLoadClass>().gridValue = sceneData.sceneCordination;
+                mainSceneObject.GetComponent<sceneLoadClass>().sceneNameTextFile.text = sceneNameMain;
+                mainSceneObject.GetComponent<sceneLoadClass>().sceneGridValue.text = "Grid Values Are : "+ sceneData.sceneCordination.x.ToString()+" , " + sceneData.sceneCordination.y.ToString();
+                mainSceneObject.GetComponent<sceneLoadClass>().setRandomColors();
+
                 SceneManager.sceneLoaded -= OnMainSceneScene;
                 Debug.Log("founded ");
 
