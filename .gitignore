@@ -93,3 +93,6 @@ CFC_Metaverse/.vsconfig
 CFC_Metaverse/Assembly-CSharp-Editor.csproj
 CFC_Metaverse/Assembly-CSharp.csproj
 CFC_Metaverse/Assets/Plugins/UniRx.meta
+CFC_Metaverse/Library/ArtifactDB
+CFC_Metaverse/Library/SourceAssetDB
+CFC_Metaverse/Logs/shadercompiler-UnityShaderCompiler.exe0.log
