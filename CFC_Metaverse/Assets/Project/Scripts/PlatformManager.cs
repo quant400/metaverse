@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -15,6 +14,7 @@ public class PlatformManager : MonoBehaviour
     public Platform[] platforms;
     public ReactiveProperty<Platform> mainReactivePlatform = new ReactiveProperty<Platform>();
     public Material[] stateMaterials;
+
     void Awake()
     {
         if (control == null)
@@ -26,13 +26,16 @@ public class PlatformManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
+
+    public void Init()
     {
         obserePlayerMoving();
     }
+
     private void Update()
     {
-        reactivePlayerPosition.Value = player.position;
+        if (player != null)
+            reactivePlayerPosition.Value = player.position;
         //FindMainPlatform();
         //PositionOtherPlatforms();
     }
