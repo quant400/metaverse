@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 [RequireComponent(typeof(CharacterController))]
@@ -16,6 +17,8 @@ public class SC_TPSController : MonoBehaviourPun
     Vector3 moveDirection = Vector3.zero;
     Vector2 rotation = Vector2.zero;
 
+    public Text playerName;
+
     [HideInInspector]
     public bool canMove = true;
 
@@ -25,6 +28,12 @@ public class SC_TPSController : MonoBehaviourPun
         {
             PlatformManager.control.player = transform;
             PlatformManager.control.Init();
+            playerName.text = "";
+        }
+        else
+        {
+            playerCameraParent.gameObject.SetActive(false);
+            playerName.text = photonView.Owner.NickName;
         }
 
         characterController = GetComponent<CharacterController>();
