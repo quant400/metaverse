@@ -9,13 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-CFC_Metaverse/[Ll]ibrary/
-CFC_Metaverse/[Tt]emp/
-CFC_Metaverse/[Oo]bj/
-CFC_Metaverse/[Bb]uild/
-CFC_Metaverse/[Bb]uilds/
-CFC_Metaverse/[Ll]ogs/
-CFC_Metaverse/[Uu]ser[Ss]ettings/
+/[Cc]FC_Metaverse/[Uu]ser[Ss]ettings/
+/[Cc]FC_Metaverse/[Ll]ibrary/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -97,3 +92,5 @@ CFC_Metaverse/Library/ArtifactDB
 CFC_Metaverse/Library/SourceAssetDB
 CFC_Metaverse/Logs/shadercompiler-UnityShaderCompiler.exe0.log
 *.log
+CFC_Metaverse/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll
+CFC_Metaverse/buildFolder/cfcmultiplayer.zip
