@@ -12,7 +12,7 @@ public class FastConnect : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        nickName = "Player" + Random.Range(1111, 9999);
+        nickName = PlayerPrefs.GetString("nickname");
         if (!PhotonNetwork.IsConnected)
         {
             Connect();

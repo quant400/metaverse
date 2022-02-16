@@ -28,7 +28,9 @@ public class SC_TPSController : MonoBehaviourPun
         {
             PlatformManager.control.player = transform;
             PlatformManager.control.Init();
-            playerName.text = "";
+            playerName.text = PlayerPrefs.GetString("nickname");
+            playerName.gameObject.transform.localScale = new Vector3(-1, 1, 1);
+
         }
         else
         {
