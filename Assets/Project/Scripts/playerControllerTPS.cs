@@ -56,6 +56,9 @@ public class playerControllerTPS : MonoBehaviourPun
     }
     void Update()
     {
+        if (!photonView.IsMine)
+            return;
+
         grounded.Value = characterController.isGrounded;
         if (photonView != null)
         {
