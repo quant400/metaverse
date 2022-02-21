@@ -230,15 +230,35 @@ public class sceneLoadedData
     }
     public void loadSceneFromVector(Vector2 index,Vector3 centerPositon)
     {
-        int place = (int)(((index.x+ startIndex) * arrayLenght) + index.y-1+ startIndex);
-        toLoadScene.Value = scenesIndexList[place];
-        scenesIndexList[place].instancePosition = centerPositon;
+        if (useAddressable)
+        {
+
+            int place = (int)(((index.x + startIndex) * arrayLenght) + index.y-1 + startIndex);
+            toLoadScene.Value = scenesIndexList[place];
+            scenesIndexList[place].instancePosition = centerPositon;
+        }
+        else
+        {
+
+            int place = (int)(((index.x + startIndex) * arrayLenght) + index.y - 1 + startIndex);
+            toLoadScene.Value = scenesIndexList[place];
+            scenesIndexList[place].instancePosition = centerPositon;
+        }
     }
     public void LoadSideScene(Vector2 index, Vector3 centerPositon, scenesClass scene)
     {
-        int place = (int)(((index.x + startIndex) * arrayLenght) + index.y - 1 + startIndex);
-        toLoadSceneSideScenes.Value = new scenesClass ( "SideObject", index, centerPositon);
-        scenesIndexList[place].instancePosition = centerPositon;
+        if (useAddressable)
+        {
+            int place = (int)(((index.x + startIndex) * arrayLenght) + index.y - 1+ startIndex);
+            toLoadSceneSideScenes.Value = new scenesClass("SideObject", index, centerPositon);
+            scenesIndexList[place].instancePosition = centerPositon;
+        }
+        else
+        {
+            int place = (int)(((index.x + startIndex) * arrayLenght) + index.y - 1 + startIndex);
+            toLoadSceneSideScenes.Value = new scenesClass("SideObject", index, centerPositon);
+            scenesIndexList[place].instancePosition = centerPositon;
+        }
     }
     sceneLoadClass FindSceneObject( Vector2 gridValue,string sceneNAme)
     {
@@ -288,7 +308,6 @@ public class sceneLoadedData
         int c = loadedScenesInstance.Count;
         sceneLoadClass localData = null;
         Debug.Log(c);
-
         sceneLoadClass data = new sceneLoadClass();
         data.gridValue = new Vector2(9999, 9999);
         for (int i = 0; i < c; i++)
@@ -344,11 +363,47 @@ public class sceneLoadedData
     public void setSceneIndexBeforeSetPostion( string mainScene, string centerLoadedScene)
     {
 
-        sceneLoadClass data = new sceneLoadClass();
+        if (useAddressable)
+        {
+            sceneLoadClass data = new sceneLoadClass();
+
+            int c = loadedScenesInstance.Count;
+            SideScenesLoadClassList.Clear();
+            for (int i = 0; i < c; i++)
+            {
+                Scene scene = loadedScenesInstance[i].Scene;
+
+                if (scene.name != centerLoadedScene)
+                {
+                    GameObject[] rootObjs = scene.GetRootGameObjects();
+                    if (rootObjs != null)
+                    {
+                        if (rootObjs.Length > 0)
+                        {
+                            for (int j = 0; j < rootObjs.Length; j++)
+                            {
+                            
+                                if (rootObjs[j].GetComponent<sceneLoadClass>() != null)
+                                {
+                                    SideScenesLoadClassList.Add(rootObjs[j].GetComponent<sceneLoadClass>());
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+
+            }
+        }
+        else
+        {
+            sceneLoadClass data = new sceneLoadClass();
 
         int c = SceneManager.sceneCount;
         SideScenesLoadClassList.Clear();
-        for (int i = 0; i < sideLoadedScenesListData.Count; i++)
+        for (int i = 0; i < c; i++)
         {
             Scene scene = SceneManager.GetSceneAt(sideLoadedScenesListData[i].rceneRank);
 
@@ -360,16 +415,20 @@ public class sceneLoadedData
                 {
                     for (int j = 0; j < rootObjs.Length; j++)
                     {
-                        if (rootObjs[j].GetComponent<sceneLoadClass>() != null)
-                        {
-                            SideScenesLoadClassList.Add(rootObjs[j].GetComponent<sceneLoadClass>());
-                        }
+                            if ((scene.name != mainScene) && (scene.name != centerLoadedScene))
+                            {
+                                if (rootObjs[j].GetComponent<sceneLoadClass>() != null)
+                                {
+                                    SideScenesLoadClassList.Add(rootObjs[j].GetComponent<sceneLoadClass>());
+                                }
+                            }
                     }
                 }
                     
                 }
                 
             
+        }
         }
 
 
@@ -380,6 +439,7 @@ public class sceneLoadedData
         currentExistCount
             .Where(_ => _ == 8)
             .DelayFrame(2)
+
             .Do(_ => setSceneIndexBeforeSetPostion("Main", toLoadScene.Value.sceneName))
             .Do(_ => setSideLoadScenePosition())
             .Do(_ => SceneManager.sceneLoaded -= OnSideSceneLoaded)
@@ -437,6 +497,7 @@ public class sceneLoadedData
             {
                for ( int i = 0; i < SideScenesLoadClassList.Count; i++)
                 {
+
                     SideScenesLoadClassList[i].objectParent.position = PlatformManager.control.sidePlatforms[i].centerPostion();
                 }
             }

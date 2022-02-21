@@ -5,6 +5,8 @@ using Photon.Realtime;
 public class FastConnect : MonoBehaviourPunCallbacks
 {
     public string nickName;
+    public static NFTInfo chosenNFT;
+    private string chosenNFTName;
 
     private void Awake()
     {
@@ -32,6 +34,19 @@ public class FastConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
+        PhotonNetwork.Instantiate(selectNFTName(), new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
+    }
+    public string selectNFTName()
+    {
+        string nameofPlayer;
+        chosenNFTName = NameToSlugConvert(chosenNFT.name);
+        return nameofPlayer = "SinglePlayerPrefabs/Characters/" + chosenNFTName;
+    }
+    string NameToSlugConvert(string name)
+    {
+        string slug;
+        slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
+        return slug;
+
     }
 }
