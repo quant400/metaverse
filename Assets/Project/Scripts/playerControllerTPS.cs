@@ -30,6 +30,7 @@ public class playerControllerTPS : MonoBehaviourPun
     float rotationSpeed = 5f;
     void Start()
     {
+        playerCameraParent = transform.GetChild(0);
         if (photonView.IsMine)
         {
             PlatformManager.control.player = transform;
@@ -40,8 +41,7 @@ public class playerControllerTPS : MonoBehaviourPun
         {
             playerCameraParent.gameObject.SetActive(false);
         }
-
-        playerCameraParent = transform.GetChild(0);
+        
         controller = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;
