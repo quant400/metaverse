@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_WEBGL
 public class WebGLSendTransactionExample : MonoBehaviour
 {
     async public void OnSendTransaction()
@@ -12,13 +13,16 @@ public class WebGLSendTransactionExample : MonoBehaviour
         // amount in wei to send
         string value = "12300000000000000";
         // gas limit OPTIONAL
-        string gas = "21000";
+        string gasLimit = "";
+        // gas price OPTIONAL
+        string gasPrice = "";
         // connects to user's browser wallet (metamask) to send a transaction
         try {
-            string response = await Web3GL.SendTransaction(to, value, gas);
+            string response = await Web3GL.SendTransaction(to, value, gasLimit, gasPrice);
             Debug.Log(response);
         } catch (Exception e) {
             Debug.LogException(e, this);
         }
     }
 }
+#endif

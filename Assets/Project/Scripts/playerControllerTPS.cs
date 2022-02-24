@@ -35,13 +35,17 @@ public class playerControllerTPS : MonoBehaviourPun
         {
             PlatformManager.control.player = transform;
             PlatformManager.control.Init();
+            playerCameraParent.gameObject.SetActive(true);
+            transform.GetChild(1).gameObject.SetActive(true);
 
         }
         else
         {
             playerCameraParent.gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+
         }
-        
+
         controller = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;

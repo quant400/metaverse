@@ -18,7 +18,7 @@ public class WebLogin : MonoBehaviour
     private int expirationTime;
     private string account;
 
-   
+
     [SerializeField]
     NFTGetter nftGetter;
     [SerializeField]
@@ -47,13 +47,14 @@ public class WebLogin : MonoBehaviour
             Web3Connect();
             OnConnected();
         }
-        
+
     }
 
     async private void OnConnected()
     {
         account = ConnectAccount();
-        while (account == "") {
+        while (account == "")
+        {
             await new WaitForSeconds(1f);
             account = ConnectAccount();
         };
@@ -66,7 +67,7 @@ public class WebLogin : MonoBehaviour
         loginButton.GetComponent<Button>().interactable = false;
         skipButton.GetComponent<Button>().interactable = false;
         nftGetter.GetNFT();
-       
+
 
     }
 

@@ -89,7 +89,9 @@ using UnityEngine.SceneManagement;
                     break;
                 case chickenGameModel.GameSteps.OnCharacterSelected:
                     uiView.goToMenu("characterSelected");
-                //    gameEndView.resetDisplay();
+                    string name ="Player " + UnityEngine.Random.Range(0, 999).ToString();
+                    PlayerPrefs.SetString("nickname", name);
+                    //    gameEndView.resetDisplay();
                     scenesView.loadSinglePlayerScene();
 
                     break;

@@ -193,7 +193,6 @@ public class sceneLoadedData
     }
     void setSideSceneDataAndLoad(scenesClass sceneData)
     {
-        Debug.Log("Assets/Project/Scenes/SceneLoadDemo/" + sceneData + ".unity");
 
         if (sceneData.sceneName.Length > 0)
         {
@@ -405,7 +404,7 @@ public class sceneLoadedData
         SideScenesLoadClassList.Clear();
         for (int i = 0; i < c; i++)
         {
-            Scene scene = SceneManager.GetSceneAt(sideLoadedScenesListData[i].rceneRank);
+            Scene scene = SceneManager.GetSceneAt(i);
 
             
                 GameObject[] rootObjs = scene.GetRootGameObjects();
@@ -439,7 +438,7 @@ public class sceneLoadedData
         currentExistCount
             .Where(_ => _ == 8)
             .DelayFrame(2)
-
+            .Where(_=>checkLoadOnce)
             .Do(_ => setSceneIndexBeforeSetPostion("Main", toLoadScene.Value.sceneName))
             .Do(_ => setSideLoadScenePosition())
             .Do(_ => SceneManager.sceneLoaded -= OnSideSceneLoaded)

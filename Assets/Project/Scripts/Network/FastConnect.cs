@@ -7,7 +7,7 @@ public class FastConnect : MonoBehaviourPunCallbacks
     public string nickName;
     public static NFTInfo chosenNFT;
     private string chosenNFTName;
-
+    public GameObject startCamera;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -34,6 +34,7 @@ public class FastConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+
         PhotonNetwork.Instantiate(selectNFTName(), new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
     }
     public string selectNFTName()
