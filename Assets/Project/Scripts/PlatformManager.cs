@@ -50,7 +50,7 @@ public class PlatformManager : MonoBehaviour
             .Do(_ => PositionOtherPlatforms())
             .Do(_ => _.gameObject.GetComponent<Renderer>().material = stateMaterials[0])
             .Do(_ => SceneLoaderView.control.loadSceneFromVector(_.index, _.gameObject.transform.GetChild(0).position))
-            .DelayFrame(2)
+            .DelayFrame(1)
             .Do(_=> loadSidePlatforms())
             .Subscribe()
             .AddTo(this);
@@ -62,6 +62,7 @@ public class PlatformManager : MonoBehaviour
         {
             SceneLoaderView.control.LoadSideScene(sidePlatforms[i].index, sidePlatforms[i].gameObject.transform.GetChild(0).position, SceneLoaderView.control.toLoadSceneSideScenes.Value);
         }
+        
     }
     void FindMainPlatform()
     {
