@@ -2303,13 +2303,13 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: FreeFall
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: MotionSpeed
   - Type: 4
     SynchronizeType: 0
     Name: Ended
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Jumped
   - Type: 1
     SynchronizeType: 1

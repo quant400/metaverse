@@ -1096,7 +1096,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 2485453786597439029}
+  - {fileID: 8741328423499535985}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1144,13 +1145,13 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: FreeFall
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: MotionSpeed
   - Type: 4
     SynchronizeType: 0
     Name: Ended
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Jumped
   - Type: 1
     SynchronizeType: 1

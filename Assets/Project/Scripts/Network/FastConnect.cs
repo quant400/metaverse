@@ -34,7 +34,7 @@ public class FastConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-
+        startCamera.SetActive(false);
         PhotonNetwork.Instantiate(selectNFTName(), new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
     }
     public string selectNFTName()
