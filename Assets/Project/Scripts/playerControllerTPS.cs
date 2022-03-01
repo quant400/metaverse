@@ -1,5 +1,7 @@
 
 using UnityEngine;
+using UnityEngine.AI;
+using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UI;
 using Photon.Pun;
 using UniRx;
@@ -30,7 +32,18 @@ public class playerControllerTPS : MonoBehaviourPun
     float rotationSpeed = 5f;
     void Start()
     {
+        Init();
+
+        controller = GetComponent<Animator>();
+        characterController = GetComponent<CharacterController>();
+        rotation.y = transform.eulerAngles.y;
+        observeGrounded();
+    }
+
+    void Init()
+    {
         playerCameraParent = transform.GetChild(0);
+
         if (photonView.IsMine)
         {
             PlatformManager.control.player = transform;
@@ -43,14 +56,13 @@ public class playerControllerTPS : MonoBehaviourPun
         {
             playerCameraParent.gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
-
+            if (GetComponent<NavMeshAgent>())
+                GetComponent<NavMeshAgent>().enabled = false;
+            if (GetComponent<AICharacterControl>())
+                GetComponent<AICharacterControl>().enabled = false;
         }
-
-        controller = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
-        rotation.y = transform.eulerAngles.y;
-        observeGrounded();
     }
+
     void observeGrounded()
     {
         grounded
