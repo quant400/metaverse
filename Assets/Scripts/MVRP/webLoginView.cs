@@ -53,6 +53,7 @@ public class webLoginView : MonoBehaviour
         }
         else
         {
+            //PlayfabManager.instance.InitPlayfab("TESTTER");
             Web3Connect();
             OnConnected();
         }
@@ -69,6 +70,8 @@ public class webLoginView : MonoBehaviour
         };
         // save account for next scene
         PlayerPrefs.SetString("Account", account);
+        // Init/Login Playfab 
+        PlayfabManager.instance.InitPlayfab(account);
         // reset login message
         SetConnectAccount("");
         // load next scene
