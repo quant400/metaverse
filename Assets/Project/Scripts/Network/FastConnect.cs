@@ -10,11 +10,19 @@ public class FastConnect : MonoBehaviourPunCallbacks
     public GameObject startCamera;
     private void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.SerializationRate = 6;
+        PhotonNetwork.SendRate = 6;
     }
     void Start()
     {
         nickName = PlayerPrefs.GetString("nickname");
+        if (PlayfabManager.instance != null)
+        {
+            if (!string.IsNullOrEmpty(PlayfabManager.instance.DisplayName))
+                nickName = PlayfabManager.instance.DisplayName;
+        }
+
         if (!PhotonNetwork.IsConnected)
         {
             Connect();
@@ -35,7 +43,8 @@ public class FastConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         startCamera.SetActive(false);
-        PhotonNetwork.Instantiate(selectNFTName(), new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
+        if (PhotonNetwork.LocalPlayer.IsLocal)
+            PhotonNetwork.Instantiate(selectNFTName(), new Vector3(PhotonNetwork.LocalPlayer.ActorNumber + 30, 0, 30), Quaternion.identity);
     }
     public string selectNFTName()
     {
@@ -49,5 +58,10 @@ public class FastConnect : MonoBehaviourPunCallbacks
         slug = name.ToLower().Replace(".", "").Replace("'", "").Replace(" ", "-");
         return slug;
 
+    }
+
+    private void Update()
+    {
+        Debug.Log(PhotonNetwork.IsMessageQueueRunning);
     }
 }

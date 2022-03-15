@@ -7,7 +7,12 @@ using System.Collections.Generic;
 public class PlayfabManager : MonoBehaviour
 {
     public static PlayfabManager instance;
+    public string DisplayName;
     public Text LoginNumber;
+
+    [Header("NickName")]
+    public GameObject NickNamePanel;
+    public InputField InputName;
 
     private void Awake()
     {
@@ -32,7 +37,7 @@ public class PlayfabManager : MonoBehaviour
         },
         (res) =>
         {
-            SetDisplayName();
+            GetAccountInfo();
             SetLoginNumber();
         },
         (error) =>
@@ -41,9 +46,42 @@ public class PlayfabManager : MonoBehaviour
         });
     }
 
-    void SetDisplayName()
+    void GetAccountInfo()
     {
+        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest()
+        {
+        },
+        (res) =>
+        {
+            if (string.IsNullOrEmpty(res.AccountInfo.TitleInfo.DisplayName))
+                NickNamePanel.SetActive(true);
+            else
+                DisplayName = res.AccountInfo.TitleInfo.DisplayName;
+        },
+        (error) =>
+        {
+            Debug.LogError(error.ErrorDetails + " " + error.ErrorMessage);
+        });
+    }
 
+    public void SetDisplayName()
+    {
+        if (string.IsNullOrEmpty(InputName.text))
+            return;
+
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest()
+        {
+            DisplayName = InputName.text
+        },
+        (res) =>
+        {
+            NickNamePanel.SetActive(false);
+            DisplayName = res.DisplayName;
+        },
+        (error) =>
+        {
+            Debug.LogError(error.ErrorDetails + " " + error.ErrorMessage);
+        });
     }
 
     void SetLoginNumber()
