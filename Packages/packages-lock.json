@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.bananaparty.async": {
+      "version": "https://github.com/forcepusher/com.bananaparty.async.git#2.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a99599978cf65f33059a4afed4a5363057c7286f"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

@@ -73,7 +73,7 @@ MonoBehaviour:
       - m_Id: 424460140dcdc1040a044bbab917df28
         m_Value: ServerData/[BuildTarget]
       - m_Id: 2f2da3bdc603462458a0ed3ae8860bd1
-        m_Value: gs://cfc_metaverse_addressable_data
+        m_Value: https://cfc-addressables-data.s3.amazonaws.com/WebGL
     m_ProfileEntryNames:
     - m_Id: 05614391cbb96e6478ab286515f58a85
       m_Name: BuildTarget

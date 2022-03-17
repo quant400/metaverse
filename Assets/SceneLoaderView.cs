@@ -10,11 +10,11 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
-
 public class SceneLoaderView : MonoBehaviour
 {
     public static SceneLoaderView control;
     public GameObject prefabTest;
+    public GameObject[] scenesPrefabs;
     [Serializable]
     public class scenesClass
     {
@@ -137,11 +137,8 @@ public class sceneLoadedData
         {
             if (useAddressable)
             {
-                Addressables.LoadSceneAsync("Assets/Project/Scenes/SceneLoadDemo/" + sceneData.sceneName + ".unity", LoadSceneMode.Additive).Completed += (asyncHandle) =>
-                {
-                   loadedScenesInstance.Add(asyncHandle.Result);
-                    checkAddressableLoaded(sceneData.sceneName);
-                };
+
+                LoadAndAddSceneAddressable("Assets/Project/Scenes/SceneLoadDemo/", sceneData.sceneName);
 
             }
             else
@@ -157,6 +154,26 @@ public class sceneLoadedData
 
 
     }
+    async void LoadAndAddSceneAddressable(string address, string sceneNAme)
+    {
+        var handle = Addressables.LoadSceneAsync(address + sceneNAme, LoadSceneMode.Additive);
+        SceneInstance go = await handle;
+        loadedScenesInstance.Add(go);
+        checkAddressableLoaded(sceneNAme);
+    }
+    async void SideLoadAndAddSceneAddressable(string address, string sceneNAme)
+    {
+        var handle = Addressables.LoadSceneAsync(address + sceneNAme, LoadSceneMode.Additive);
+        SceneInstance go = await handle;
+        loadedScenesInstance.Add(go);
+        OnSideSceneLoadedAddressable(sceneNAme);
+    }
+    async void UnloadSceneAddressable(SceneInstance sceneTounload)
+    {
+        var handle = Addressables.UnloadSceneAsync(sceneTounload);
+        SceneInstance go = await handle;
+
+    }
     void UnloadAllScenesExcept(string sceneName)
     {
         if (useAddressable)
@@ -167,9 +184,7 @@ public class sceneLoadedData
                 Scene scene = loadedScenesInstance[i].Scene;
                 if (scene.name != sceneName)
                 {
-                    Addressables.UnloadSceneAsync(loadedScenesInstance[i]).Completed += (asyncHandle) =>
-                    {
-                    };
+                    UnloadSceneAddressable(loadedScenesInstance[i]);
                 }
 
             }
@@ -198,15 +213,10 @@ public class sceneLoadedData
         {
             if (useAddressable)
             {
-                
-                 
-                
-                Addressables.LoadSceneAsync("Assets/Project/Scenes/SceneLoadDemo/" + sceneData.sceneName + ".unity", LoadSceneMode.Additive).Completed += (asyncHandle) =>
-                {
-                    loadedScenesInstance.Add(asyncHandle.Result);
-                    OnSideSceneLoadedAddressable(sceneData.sceneName);
 
-                };
+
+
+                SideLoadAndAddSceneAddressable("Assets/Project/Scenes/SceneLoadDemo/" , sceneData.sceneName);
 
             }
             else
@@ -385,6 +395,9 @@ public class sceneLoadedData
                                 if (rootObjs[j].GetComponent<sceneLoadClass>() != null)
                                 {
                                     SideScenesLoadClassList.Add(rootObjs[j].GetComponent<sceneLoadClass>());
+                                   StartCoroutine(rootObjs[j].GetComponent<sceneLoadClass>().loadAdressableAsset("Assets/Project/Prefabs/SideLoadObject.prefab"));
+                                  //  rootObjs[j].GetComponent<sceneLoadClass>().asyncAdressablesLoad("Assets/Project/Prefabs/SideLoadObject.prefab");
+
                                 }
                             }
                         }
@@ -419,6 +432,10 @@ public class sceneLoadedData
                                 if (rootObjs[j].GetComponent<sceneLoadClass>() != null)
                                 {
                                     SideScenesLoadClassList.Add(rootObjs[j].GetComponent<sceneLoadClass>());
+                                   // rootObjs[j].GetComponent<sceneLoadClass>().noAdressableInstance(scenesPrefabs[1]);
+                                    StartCoroutine(rootObjs[j].GetComponent<sceneLoadClass>().loadAdressableAsset("Assets/Project/Prefabs/SideLoadObject.prefab"));
+
+                                    //  rootObjs[j].GetComponent<sceneLoadClass>().asyncAdressablesLoad("Assets/Project/Prefabs/SideLoadObject.prefab");
                                 }
                             }
                     }
@@ -533,7 +550,10 @@ public class sceneLoadedData
                     mainSceneObject.GetComponent<sceneLoadClass>().gridValue = sceneData.sceneCordination;
                     mainSceneObject.GetComponent<sceneLoadClass>().sceneNameTextFile.text = sceneNameMain;
                     mainSceneObject.GetComponent<sceneLoadClass>().sceneGridValue.text = "Grid Values Are : " + sceneData.sceneCordination.x.ToString() + " , " + sceneData.sceneCordination.y.ToString();
-                    mainSceneObject.GetComponent<sceneLoadClass>().setRandomColors();
+                   StartCoroutine(mainSceneObject.GetComponent<sceneLoadClass>().loadAdressableAsset("Assets/Project/Prefabs/FullLoadInstance.prefab"));
+
+                   // mainSceneObject.GetComponent<sceneLoadClass>().setRandomColors();
+                                   //    mainSceneObject.GetComponent<sceneLoadClass>().asyncAdressablesLoad("Assets/Project/Prefabs/FullLoadInstance.prefab");
 
                     Debug.Log("founded ");
 
@@ -557,7 +577,10 @@ public class sceneLoadedData
                     mainSceneObject.GetComponent<sceneLoadClass>().gridValue = sceneData.sceneCordination;
                     mainSceneObject.GetComponent<sceneLoadClass>().sceneNameTextFile.text = sceneNameMain;
                     mainSceneObject.GetComponent<sceneLoadClass>().sceneGridValue.text = "Grid Values Are : " + sceneData.sceneCordination.x.ToString() + " , " + sceneData.sceneCordination.y.ToString();
-                    mainSceneObject.GetComponent<sceneLoadClass>().setRandomColors();
+                    // mainSceneObject.GetComponent<sceneLoadClass>().setRandomColors();
+                    //mainSceneObject.GetComponent<sceneLoadClass>().noAdressableInstance(scenesPrefabs[0]);
+                    // mainSceneObject.GetComponent<sceneLoadClass>().asyncAdressablesLoad("Assets/Project/Prefabs/FullLoadInstance.prefab");
+                    StartCoroutine(mainSceneObject.GetComponent<sceneLoadClass>().loadAdressableAsset("Assets/Project/Prefabs/FullLoadInstance.prefab"));
 
                     SceneManager.sceneLoaded -= OnMainSceneScene;
                     Debug.Log("founded ");

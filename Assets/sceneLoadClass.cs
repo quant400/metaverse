@@ -5,6 +5,9 @@ using UniRx;
 using UniRx.Triggers;
 using UniRx.Operators;
 using TMPro;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
 public class sceneLoadClass : MonoBehaviour
 {
     public Vector2 gridValue;
@@ -16,10 +19,11 @@ public class sceneLoadClass : MonoBehaviour
     public TextMeshProUGUI sceneNameTextFile;
     public TextMeshProUGUI sceneGridValue;
     public List<Renderer> allSceneMeshes = new List<Renderer>();
+    public string adressableAdress;
+    public GameObject loadedAdressableAsset;
     // Start is called before the first frame update
     void Start()
     {
-        setAllMeshes();
     }
 
     // Update is called once per frame
@@ -27,9 +31,44 @@ public class sceneLoadClass : MonoBehaviour
     {
         
     }
-    public void setAllMeshes()
+    public IEnumerator loadAdressableAsset(string name)
     {
-        foreach (Transform child in objectParent.transform)
+        AsyncOperationHandle<GameObject> goHandle = Addressables.LoadAssetAsync<GameObject>(name);
+
+        yield return goHandle;
+        if (goHandle.Status == AsyncOperationStatus.Succeeded)
+        {
+            loadedAdressableAsset = Instantiate(goHandle.Result, objectParent);
+            //etc...
+        }
+        setAllMeshes(loadedAdressableAsset);
+        setRandomColors();
+        Addressables.Release(goHandle);
+
+    }
+    public void noAdressableInstance(GameObject prefab)
+    {
+        loadedAdressableAsset = Instantiate(prefab, objectParent);
+        setAllMeshes(loadedAdressableAsset);
+        setRandomColors();
+    }
+    public async void asyncAdressablesLoad(string address)
+    {
+        var validateAddress = Addressables.LoadAssetAsync<GameObject>(address);
+        GameObject enemyPrefab = await Addressables.LoadAssetAsync<GameObject>(address).Task;
+        if (validateAddress.Status ==AsyncOperationStatus.Succeeded)
+        {
+            
+                loadedAdressableAsset = Instantiate(enemyPrefab, objectParent);
+            setAllMeshes(loadedAdressableAsset);
+            setRandomColors();
+            Addressables.Release(validateAddress);
+
+        }
+    }
+    public void setAllMeshes(GameObject parent)
+    {
+        foreach (Transform child in parent.transform)
         {
 
             if (child.GetComponent<Renderer>())
